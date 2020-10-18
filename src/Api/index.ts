@@ -1,9 +1,7 @@
-import { rejects } from "assert";
-import { resolve } from "dns";
 import { setTimeout } from "timers";
 
 export const fetchEvents = () =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     const response = [
       {
         id: 1,
@@ -31,7 +29,7 @@ export const fetchEvents = () =>
   });
 
 export const updateEvent = () =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
     }, 1000);

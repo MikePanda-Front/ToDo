@@ -12,7 +12,7 @@ import { ApplicationState } from "../../Store/rootReducer";
 import { TasksWrapper, LinkWrapper } from "./styles";
 
 interface StateProps {
-  events: IEvent[];
+  events: IEvent[] | null;
   loading: boolean;
 }
 
@@ -24,16 +24,16 @@ const EventsList: FunctionComponent = () => {
   }));
 
   React.useEffect(() => {
-    !events.length && dispatch(FetchEvents());
+    !events && dispatch(FetchEvents());
   }, []);
 
   return (
     <TasksWrapper>
-      {loading && !events.length ? (
+      {loading && !events ? (
         <Spin />
       ) : (
         <>
-          {!!events.length && events.map((event) => <ToDoItem key={event.id} event={event} />)}
+          {Array.isArray(events) && !!events.length && events.map((event) => <ToDoItem key={event.id} event={event} />)}
           <LinkWrapper>
             <Link to={`/Add`}>
               <Button type="primary" shape="circle" icon={<PlusOutlined />} loading={loading} />

@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Checkbox, Input, Form, Row, Col } from "antd";
-import { EditOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useParams, useHistory } from "react-router-dom";
 
 import { EditWrapper } from "./styles";
@@ -10,7 +9,7 @@ import { UpdateEvent } from "../../Ducks/Events/actions";
 import { ApplicationState } from "../../Store/rootReducer";
 
 type StateProps = {
-  event: IEvent;
+  event: IEvent | null;
 };
 
 const ToDoItemEdit: React.FunctionComponent = () => {
@@ -20,7 +19,7 @@ const ToDoItemEdit: React.FunctionComponent = () => {
   const history = useHistory();
 
   const { event } = useSelector<ApplicationState, StateProps>((state) => ({
-    event: state.events.events.filter((event) => event.id.toString() === id)[0],
+    event: state.events.events && state.events.events.filter((event) => event.id.toString() === id)[0],
   }));
 
   const onSubmit = () => {
@@ -38,9 +37,9 @@ const ToDoItemEdit: React.FunctionComponent = () => {
       onFinish={onFinish}
       className="row_padding"
       initialValues={{
-        isActive: event.isActive || false,
-        name: event.name,
-        description: event.description,
+        isActive: (event && event.isActive) || false,
+        name: event && event.name,
+        description: event && event.description,
       }}
     >
       <EditWrapper>
